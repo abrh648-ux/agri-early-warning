@@ -40,13 +40,21 @@ def load_xtest():
 
 @st.cache_data
 def load_geojson():
-    with open("ethiopia_regions.geojson") as f:
-        return json.load(f)
+    import os
+    for name in ["ethiopia_regions.geojson", "ethiopia_regions (1).geojson"]:
+        if os.path.exists(name):
+            with open(name) as f:
+                return json.load(f)
+    st.error("GeoJSON file not found.")
+    return {}
 
 @st.cache_resource
 def load_models():
+    import os
+    rf_file = "random_forest_model.pkl" if os.path.exists("random_forest_model.pkl") \
+              else "random_forest_model (1).pkl"
     xgb = joblib.load("xgboost_model.pkl")
-    rf  = joblib.load("random_forest_model.pkl")
+    rf  = joblib.load(rf_file)
     return xgb, rf
 
 df            = load_data()
