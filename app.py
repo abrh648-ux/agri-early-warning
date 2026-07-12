@@ -5,20 +5,6 @@
 # All other features auto-filled from historical data
 # =====================================================
 
-import subprocess
-import sys
-
-# Auto-install all required packages if missing
-required = [
-    "joblib", "shap==0.51.0", "matplotlib", "numpy",
-    "pandas", "plotly", "scikit-learn", "seaborn", "xgboost"
-]
-for pkg in required:
-    try:
-        __import__(pkg.split("==")[0].split(">=")[0])
-    except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
-
 import streamlit as st
 import pandas as pd
 import numpy as np
